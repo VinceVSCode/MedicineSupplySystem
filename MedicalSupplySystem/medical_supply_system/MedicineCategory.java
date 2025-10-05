@@ -2,10 +2,10 @@
 package MedicalSupplySystem.medical_supply_system;
 
 public class MedicineCategory {
-    private long id;
+    private Long id;
     private String medCategory;
 
-    public MedicineCategory(long id, String medCategory) {
+    public MedicineCategory(Long id, String medCategory) {
         this.id = id;
         this.medCategory = medCategory;
     }
