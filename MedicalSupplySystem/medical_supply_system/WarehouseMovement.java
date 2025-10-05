@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 public class WarehouseMovement {
 
-    private long id;
+    private Long id;
     private MovementType mType;
     private Medicine medicine;
     private int amount;
     private LocalDate  date;
 
-    public WarehouseMovement(long id, MovementType mType, Medicine medicine, int amount, LocalDate  date) {
+    public WarehouseMovement(Long id, MovementType mType, Medicine medicine, int amount, LocalDate  date) {
         this.id = id;
         this.mType = mType;
         this.medicine = medicine;
@@ -19,11 +19,11 @@ public class WarehouseMovement {
         this.date = date;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public MovementType getMovementType() {
+    public MovementType getType() {
         return mType;
     }
 
@@ -31,7 +31,7 @@ public class WarehouseMovement {
         return medicine;
     }
 
-    public int getQuantity() {
+    public int getAmount() {
         return amount;
     }
 

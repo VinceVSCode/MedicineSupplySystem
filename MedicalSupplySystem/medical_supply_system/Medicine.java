@@ -14,7 +14,7 @@ public class Medicine {
     private int stock;
     private MedicineCategory category;
 
-    public Medicine(long id, String code, String name, BigDecimal price, int stock, MedicineCategory category) {
+    public Medicine(Long id, String code, String name, BigDecimal price, int stock, MedicineCategory category) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -23,7 +23,7 @@ public class Medicine {
         this.category = category;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

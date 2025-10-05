@@ -10,7 +10,7 @@ public class MedicineCategory {
         this.medCategory = medCategory;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

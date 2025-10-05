@@ -1,4 +1,4 @@
-package SaveRepo.save_repo;
+package SaveRepo;
 // imports
 import MedicalSupplySystem.medical_supply_system.WarehouseMovement;
 import java.util.*;
@@ -9,7 +9,7 @@ public interface WarehouseMovementRepository {
     List<WarehouseMovement> findAll();
     List<WarehouseMovement> findByFilter(
         Optional<String> medicineCode,
-         Optional<LocalDate> startDate,
-         Optional<LocalDate> endDate
+         Optional<LocalDate> dateFrom,
+         Optional<LocalDate> dateTo
          );
 }
