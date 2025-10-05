@@ -47,6 +47,6 @@ public class Medicine {
         return category;
     }
     // methods to adjust stock
-    void increaseStock(int amount) { this.stock += amount; }
-    void decreaseStock(int amount) { this.stock -= amount; }
+    public void increaseStock(int amount) { this.stock += amount; }
+    public void decreaseStock(int amount) { this.stock -= amount; }
 }
