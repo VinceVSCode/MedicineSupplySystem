@@ -35,23 +35,32 @@ public class Main {
         System.out.println("== Medicines (initial) ==");
         printMedicines(medicineService.listAllMedicines());
 
-        // --- Create movements ---
+        // --- Create movements (now using safe helper) ---
+        // v0.1.1 CHANGED: use safeAttempt(...) so errors are thrown by service but handled here.
+
         // 1) Deliver 30 Paracetamol on 2025-10-01
-        movementService.createMovement("MED-001", MovementType.DELIVER_MEDICINE.name(), 30, LocalDate.of(2025, 10, 1));
+        safeAttempt(() ->
+            movementService.createMovement("MED-001", MovementType.DELIVER_MEDICINE.name(), 30, LocalDate.of(2025, 10, 1)),
+            "Deliver 30 Paracetamol on 2025-10-01");
 
-        // 2) Order (consume) 40 Paracetamol on 2025-10-02
-        movementService.createMovement("MED-001", MovementType.RECEIVE_MEDICINE.name(), 40, LocalDate.of(2025, 10, 2));
+        // 2) Order 40 Paracetamol on 2025-10-02
+        safeAttempt(() ->
+            movementService.createMovement("MED-001", MovementType.RECEIVE_MEDICINE.name(), 40, LocalDate.of(2025, 10, 2)),
+            "Order 40 Paracetamol on 2025-10-02");
 
-        // 3) Try to over-consume Vitamin C (will throw)
-        try {
-            movementService.createMovement("MED-002", MovementType.RECEIVE_MEDICINE.name(), 50, LocalDate.of(2025, 10, 3));
-        } catch (Exception ex) {
-            System.out.println("[Expected] Could not create movement: " + ex.getMessage());
-        }
+        // 3) Intentionally over-consume Vitamin C (will throw but continue)
+        safeAttempt(() ->
+            movementService.createMovement("MED-002", MovementType.RECEIVE_MEDICINE.name(), 50, LocalDate.of(2025, 10, 3)),
+            "Order 50 Vitamin C on 2025-10-03");
 
-        // 4) Deliver 100 Vitamin C on 2025-10-03, then order 25 on 2025-10-04
-        movementService.createMovement("MED-002", MovementType.DELIVER_MEDICINE.name(), 100, LocalDate.of(2025, 10, 3));
-        movementService.createMovement("MED-002", MovementType.RECEIVE_MEDICINE.name(), 25, LocalDate.of(2025, 10, 4));
+        // 4) Deliver 100 Vitamin C, then order 25
+        safeAttempt(() ->
+            movementService.createMovement("MED-002", MovementType.DELIVER_MEDICINE.name(), 100, LocalDate.of(2025, 10, 3)),
+            "Deliver 100 Vitamin C on 2025-10-03");
+
+        safeAttempt(() ->
+            movementService.createMovement("MED-002", MovementType.RECEIVE_MEDICINE.name(), 25, LocalDate.of(2025, 10, 4)),
+            "Order 25 Vitamin C on 2025-10-04");
 
         // --- Show all medicines (after movements) ---
         System.out.println("\n== Medicines (after movements) ==");
@@ -69,7 +78,14 @@ public class Main {
                 Optional.of(LocalDate.of(2025, 10, 4))
         ));
     }
-
+    private static void safeAttempt(Runnable action, String label) {
+        try {
+            action.run();
+            System.out.println("[OK] " + label);
+        } catch (Exception ex) {
+            System.out.println("[FAILED] " + label + " -> " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+        }
+    }
     private static void printMedicines(List<Medicine> meds) {
         for (Medicine m : meds) {
             System.out.printf(" - %s (%s) | price=%s | stock=%d | category=%s%n",
