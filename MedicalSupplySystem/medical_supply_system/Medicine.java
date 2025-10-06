@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class Medicine {
 
-    private long id;
+    private Long id;
     private String code;
     private String name;
     // BigDecimal gia extra akribeia.
