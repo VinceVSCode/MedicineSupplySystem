@@ -24,11 +24,11 @@ public class WarehouseMovementServiceImpl implements WarehouseMovementAction {
         if (amount <= 0) throw new IllegalArgumentException("amount must be > 0");
         if (date == null) throw new IllegalArgumentException("date required");
 
-        MovementType type = MovementType.valueOf(typeStr); // strict; or map safely if you prefer
+        MovementType type = MovementType.valueOf(typeStr); // throws IllegalArgumentException if invalid
         Medicine med = medicines.findByCode(medicineCode)
                 .orElseThrow(() -> new IllegalArgumentException("unknown medicine code"));
 
-        // stock rule
+        // stock movement types
         switch (type) {
             case RECEIVE_MEDICINE -> med.increaseStock(amount);
             case DELIVER_MEDICINE -> {
