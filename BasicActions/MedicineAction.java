@@ -1,4 +1,4 @@
-// v0.1 - service/MedicineAction.java
+
 package BasicActions;
 
 import MedicalSupplySystem.medical_supply_system.Medicine;

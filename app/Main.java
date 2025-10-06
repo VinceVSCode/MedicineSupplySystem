@@ -35,8 +35,7 @@ public class Main {
         System.out.println("== Medicines (initial) ==");
         printMedicines(medicineService.listAllMedicines());
 
-        // --- Create movements (now using safe helper) ---
-        // v0.1.1 CHANGED: use safeAttempt(...) so errors are thrown by service but handled here.
+        // --- Create movements Actions---
 
         // 1) Deliver 30 Paracetamol on 2025-10-01
         safeAttempt(() ->
